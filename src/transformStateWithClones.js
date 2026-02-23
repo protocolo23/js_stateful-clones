@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 'use strict';
 
 /**
@@ -7,30 +8,29 @@
  * @return {Object[]}
  */
 function transformStateWithClones(state, actions) {
-  // eslint-disable-next-line spaced-comment
-  //write code here
   const result = [];
-  let current = { ...state };
+  let stateCopy = { ...state };
 
   for (const action of actions) {
     switch (action.type) {
       case 'clear':
-        current = {};
+        stateCopy = {};
         break;
       case 'addProperties':
-        current = { ...current, ...action.extraData };
+        stateCopy = { ...stateCopy, ...action.extraData };
         break;
       case 'removeProperties':
-        current = { ...current };
+        stateCopy = { ...stateCopy };
 
         for (const key of action.keysToRemove) {
-          delete current[key];
+          delete stateCopy[key];
         }
         break;
       default:
         break;
     }
-    result.push(current);
+    //Sempre empurra uma cópianova do estado
+    result.push(stateCopy);
   }
 
   return result;
